@@ -84,7 +84,7 @@ List of all the conversations.
 - `ZETAG`, _varchar_: ❓
   - `w:306184;` is the value in one specific chat 🧐
 - `ZLASTMESSAGETEXT`, _varchar_: always `null` in my case ❓
-- `ZPARTNERNAME`, _varchar_: name of the contact as set in the app itself
+- `ZPARTNERNAME`, _varchar_: name of the contact as saved in the phone's contacts
 - `ZSAVEDINPUT`, _varchar_: *probably* the a pretyped message that was not sent, always `null` in my case 🧐
 
 ### `ZWAGROUPINFO`
@@ -146,17 +146,19 @@ List of all the conversations.
 - `ZGROUPMEMBER`, _integer_:
 - `ZLASTSESSION`, _integer_:
 - `ZMEDIAITEM`, _integer_:
-- `ZMESSAGEINFO`, _integer_:
-- `ZPARENTMESSAGE`, _integer_:
-- `ZMESSAGEDATE`, _timestamp_:
-- `ZSENTDATE`, _timestamp_:
-- `ZFROMJID`, _varchar_:
+- `ZMESSAGEINFO` 🔗, _integer_:
+- `ZPARENTMESSAGE`, _integer_: always `null` in my case ❓
+- `ZMESSAGEDATE`, _timestamp_: timestamp when the message was written
+- `ZSENTDATE`, _timestamp_: timestamp when the message was sent
+- `ZFROMJID`, _varchar_: [recipient's contact id](#jid)
+  - `null` for own messages
 - `ZMEDIASECTIONID`, _varchar_:
 - `ZPHASH`, _varchar_:
-- `ZPUSHNAME`, _varchar_:
-- `ZSTANZAID`, _varchar_:
-- `ZTEXT`, _varchar_:
-- `ZTOJID`, _varchar_:
+- `ZPUSHNAME`, _varchar_: name of the contact as set in the app itself
+  - `null` for own messages
+- `ZSTANZAID`, _varchar_: ❓
+- `ZTEXT`, _varchar_: actual message text
+- `ZTOJID`, _varchar_: [recipient's contact id](#jid); sometimes `null` 🧐
 
 ### `ZWAMESSAGEDATAITEM`
 - `Z_PK` 🔑, _integer_
