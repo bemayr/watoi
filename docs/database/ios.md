@@ -1,5 +1,5 @@
 # Database documentation for WhatsApp
-[apple|2.18.100](https://img.shields.io/badge/-2.18.100-blue.svg?logo=apple)
+![apple|2.18.100](https://img.shields.io/badge/-2.18.100-blue.svg?logo=apple)
 
 > In this document I try to reverse engineer the database used by WhatsApp on iOS to enable cross-messenger message transfers.
 
