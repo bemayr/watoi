@@ -27,7 +27,7 @@ Migrate Whatsapp chats history from Android to iOS.
       xcodebuild -project watoi.xcodeproj -target watoi
 
 * Create an unencrypted backup to local computer (not iCloud) with iTunes.
-  Find the latest backup in `~/Library/Application Support/MobileSync/Backup`.
+  Find the latest backup in `~/Library/Application Support/MobileSync/Backup` (mac OS) or `C:\Users\<username>\Apple\MobileSync\Backup ` (Windows 10 Store App, [reddit](https://www.reddit.com/r/apple/comments/8ozde8/itunes_from_windows_store_backup_location/), [apple](https://support.apple.com/en-us/HT204215)).
 * Locate Whatsapp database file inside the backup and copy it somewhere:
 
       $ sqlite3 <backup>/Manifest.db "select fileID from Files where relativePath = 'ChatStorage.sqlite' and domain like '%whatsapp%';"
