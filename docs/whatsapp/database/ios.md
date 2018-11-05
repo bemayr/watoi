@@ -48,7 +48,15 @@ Blocked contacts; This information must be stored on the WhatsApp servers, becau
 This table is empty in my backup. 🧐
 
 ### `ZWACHATPUSHCONFIG`
-🔜
+This table contains all the muted chats.
+`Z_PK` 🔑, _integer_
+`Z_ENT`, _integer_
+`Z_OPT`, _integer_
+`ZALERTS`, _integer_: always 0 in my case ❓
+`ZMUTEDUNTIL`, _timestamp_: timestamp until when this chat is muted
+`ZJID` 🔗, _varchar_: foreign key to the [chat](#zwachatsession)
+`ZRINGTONE`, _varchar_: always `null` in my case ❓
+`ZSOUND`, _varchar_: always `null` in my case ❓
 
 ### `ZWACHATSESSION`
 List of all the conversations.
@@ -62,8 +70,8 @@ List of all the conversations.
   - 1296 = ❓
   - 1304 = ❓
 - `ZHIDDEN`, _integer.bool_: whether this chat is hidden from the chat list view (if no message was sent, but the profile was opened or the user looked at the contact's story)
-- `ZIDENTITYVERIFICATIONEPOCH`, _integer_: always 0 ❓
-- `ZIDENTITYVERIFICATIONSTATE`, _integer_: always 0 ❓
+- `ZIDENTITYVERIFICATIONEPOCH`, _integer_: always 0 in my case ❓
+- `ZIDENTITYVERIFICATIONSTATE`, _integer_: always 0 in my case ❓
 - `ZMESSAGECOUNTER`, _integer_: number of messages in this chat (start index 🧐)
 - `ZREMOVED`, _integer.bool_: whether this chat was removed
 - `ZSESSIONTYPE`, _integer_: type of the chat
