@@ -49,14 +49,14 @@ This table is empty in my backup. 🧐
 
 ### `ZWACHATPUSHCONFIG`
 This table contains all the muted chats.
-`Z_PK` 🔑, _integer_
-`Z_ENT`, _integer_
-`Z_OPT`, _integer_
-`ZALERTS`, _integer_: always 0 in my case ❓
-`ZMUTEDUNTIL`, _timestamp_: timestamp until when this chat is muted
-`ZJID` 🔗, _varchar_: foreign key to the [chat](#zwachatsession)
-`ZRINGTONE`, _varchar_: always `null` in my case ❓
-`ZSOUND`, _varchar_: always `null` in my case ❓
+- `Z_PK` 🔑, _integer_
+- `Z_ENT`, _integer_
+- `Z_OPT`, _integer_
+- `ZALERTS`, _integer_: always 0 in my case ❓
+- `ZMUTEDUNTIL`, _timestamp_: timestamp until when this chat is muted
+- `ZJID` 🔗, _varchar_: foreign key to the [chat](#zwachatsession)
+- `ZRINGTONE`, _varchar_: always `null` in my case ❓
+- `ZSOUND`, _varchar_: always `null` in my case ❓
 
 ### `ZWACHATSESSION`
 List of all the conversations.
