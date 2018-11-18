@@ -4,7 +4,7 @@
 > In this document I try to reverse engineer the database used by WhatsApp on iOS to enable cross-messenger message transfers.
 
 ## How to get the DB for reverse-engineering
-Take a look at step 3 of the [README's step-by-step-guide](https://github.com/bemayr/watoi/blob/master/README.md#step-by-step-guide) and open the DB with the sqlite-viewer of your choice.
+Take a look at step 3 of the [README's step-by-step-guide](./README.md#step-by-step-guide) and open the DB with the sqlite-viewer of your choice.
 
 ## Legend
 - 🔑 is a primary key column
