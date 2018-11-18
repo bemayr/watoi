@@ -4,7 +4,7 @@
 > In this document I try to reverse engineer the database used by WhatsApp on iOS to enable cross-messenger message transfers.
 
 ## How to get the DB for reverse-engineering
-Take a look at step 3 of the [README's step-by-step-guide](https://github.com/bemayr/watoi/blob/master/README.md#step-by-step-guide) and open the DB with the sqlite-viewer of your choice.
+Take a look at step 3 of the [README's step-by-step-guide](./README.md#step-by-step-guide) and open the DB with the sqlite-viewer of your choice.
 
 ## Legend
 - 🔑 is a primary key column
@@ -48,7 +48,15 @@ Blocked contacts; This information must be stored on the WhatsApp servers, becau
 This table is empty in my backup. 🧐
 
 ### `ZWACHATPUSHCONFIG`
-🔜
+This table contains all the muted chats.
+- `Z_PK` 🔑, _integer_
+- `Z_ENT`, _integer_
+- `Z_OPT`, _integer_
+- `ZALERTS`, _integer_: always 0 in my case ❓
+- `ZMUTEDUNTIL`, _timestamp_: timestamp until when this chat is muted
+- `ZJID` 🔗, _varchar_: foreign key to the [chat](#zwachatsession)
+- `ZRINGTONE`, _varchar_: always `null` in my case ❓
+- `ZSOUND`, _varchar_: always `null` in my case ❓
 
 ### `ZWACHATSESSION`
 List of all the conversations.
@@ -62,8 +70,8 @@ List of all the conversations.
   - 1296 = ❓
   - 1304 = ❓
 - `ZHIDDEN`, _integer.bool_: whether this chat is hidden from the chat list view (if no message was sent, but the profile was opened or the user looked at the contact's story)
-- `ZIDENTITYVERIFICATIONEPOCH`, _integer_: always 0 🧐
-- `ZIDENTITYVERIFICATIONSTATE`, _integer_: always 0 🧐
+- `ZIDENTITYVERIFICATIONEPOCH`, _integer_: always 0 in my case ❓
+- `ZIDENTITYVERIFICATIONSTATE`, _integer_: always 0 in my case ❓
 - `ZMESSAGECOUNTER`, _integer_: number of messages in this chat (start index 🧐)
 - `ZREMOVED`, _integer.bool_: whether this chat was removed
 - `ZSESSIONTYPE`, _integer_: type of the chat
@@ -74,18 +82,18 @@ List of all the conversations.
 - `ZUNREADCOUNT`, _integer_: number of unread messages
 - `ZGROUPINFO` 🔗, _integer_: foreign key to the [group info](#zwagroupinfo)
 - `ZLASTMESSAGE` 🔗, _integer_: foreign key to the [last received message](#zwamessage)
-- `ZPROPERTIES`, _integer_: always `null` in my case 🧐
+- `ZPROPERTIES`, _integer_: always `null` in my case ❓
 - `ZLASTMESSAGEDATE`, _timestamp_: timestamp of the last message
-- `ZLOCATIONSHARINGENDDATE`, _timestamp_: always `null` in my case 🧐
+- `ZLOCATIONSHARINGENDDATE`, _timestamp_: always `null` in my case ❓
 - `ZCONTACTIDENTIFIER`, _varchar_: ❓
   - `null` for group chats
   - `guid` for single chats, I've got one weird `:ABPerson`-suffix for one contact 🧐
 - `ZCONTACTJID`, _varchar_: [contact id](#jid)
 - `ZETAG`, _varchar_: ❓
   - `w:306184;` is the value in one specific chat 🧐
-- `ZLASTMESSAGETEXT`, _varchar_: always `null` in my case 🧐
-- `ZPARTNERNAME`, _varchar_: name of the contact as set in the app itself
-- `ZSAVEDINPUT`, _varchar_: always `null` in my case 🧐
+- `ZLASTMESSAGETEXT`, _varchar_: always `null` in my case ❓
+- `ZPARTNERNAME`, _varchar_: name of the contact as saved in the phone's contacts
+- `ZSAVEDINPUT`, _varchar_: *probably* the a pretyped message that was not sent, always `null` in my case 🧐
 
 ### `ZWAGROUPINFO`
 🔜
@@ -126,10 +134,10 @@ List of all the conversations.
 - `Z_PK` 🔑, _integer_
 - `Z_ENT`, _integer_
 - `Z_OPT`, _integer_
-- `ZCHILDMESSAGESDELIVEREDCOUNT`, _integer_:
-- `ZCHILDMESSAGESPLAYEDCOUNT`, _integer_:
-- `ZCHILDMESSAGESREADCOUNT`, _integer_:
-- `ZDATAITEMVERSION`, _integer_:
+- `ZCHILDMESSAGESDELIVEREDCOUNT`, _integer_: always 0 in my case ❓
+- `ZCHILDMESSAGESPLAYEDCOUNT`, _integer_: always 0 in my case ❓
+- `ZCHILDMESSAGESREADCOUNT`, _integer_: always 0 in my case ❓
+- `ZDATAITEMVERSION`, _integer_:  always 3 in my case ❓
 - `ZDOCID`, _integer_:
 - `ZENCRETRYCOUNT`, _integer_:
 - `ZFILTEREDRECIPIENTCOUNT`, _integer_:
@@ -146,17 +154,19 @@ List of all the conversations.
 - `ZGROUPMEMBER`, _integer_:
 - `ZLASTSESSION`, _integer_:
 - `ZMEDIAITEM`, _integer_:
-- `ZMESSAGEINFO`, _integer_:
-- `ZPARENTMESSAGE`, _integer_:
-- `ZMESSAGEDATE`, _timestamp_:
-- `ZSENTDATE`, _timestamp_:
-- `ZFROMJID`, _varchar_:
+- `ZMESSAGEINFO` 🔗, _integer_:
+- `ZPARENTMESSAGE`, _integer_: always `null` in my case ❓
+- `ZMESSAGEDATE`, _timestamp_: timestamp when the message was written
+- `ZSENTDATE`, _timestamp_: timestamp when the message was sent
+- `ZFROMJID`, _varchar_: [recipient's contact id](#jid)
+  - `null` for own messages
 - `ZMEDIASECTIONID`, _varchar_:
 - `ZPHASH`, _varchar_:
-- `ZPUSHNAME`, _varchar_:
-- `ZSTANZAID`, _varchar_:
-- `ZTEXT`, _varchar_:
-- `ZTOJID`, _varchar_:
+- `ZPUSHNAME`, _varchar_: name of the contact as set in the app itself
+  - `null` for own messages
+- `ZSTANZAID`, _varchar_: ❓
+- `ZTEXT`, _varchar_: actual message text
+- `ZTOJID`, _varchar_: [recipient's contact id](#jid); sometimes `null` 🧐
 
 ### `ZWAMESSAGEDATAITEM`
 - `Z_PK` 🔑, _integer_
